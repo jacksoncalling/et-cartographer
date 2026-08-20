@@ -65,9 +65,41 @@ def is_ghost(n):
 nodes = set(n for n in raw if not is_nav(n))
 adj = defaultdict(set)
 link_re = re.compile(r"\[\[([^\]|#]+)")
+
+def movements_zone(txt):
+    """Extract the typed-movements zone of a card, where [[wikilinks]] are
+    structural edges. Skips frontmatter, title, description paragraph, and
+    stops before Hits/Does-not-hit/Source lines. This mirrors the Terroir
+    principle: only canonical typed relationships count as graph edges."""
+    body = txt
+    if txt.startswith("---"):
+        end = txt.find("\n---", 3)
+        if end != -1: body = txt[end+4:]
+    lines = body.splitlines()
+    past_title = False
+    past_desc = False
+    blank_after_desc = False
+    zone = []
+    for line in lines:
+        s = line.strip()
+        if not past_title:
+            if s.startswith("# "): past_title = True
+            continue
+        if not past_desc:
+            if not s: past_desc = True
+            continue
+        sl = s.lower()
+        if sl.startswith("- hits:") or sl.startswith("- does not hit:"):
+            break
+        if sl.startswith("source:"):
+            break
+        if s: zone.append(line)
+    return "\n".join(zone)
+
 for s, txt in raw.items():
     if is_nav(s): continue
-    for m in link_re.findall(txt):
+    mzone = movements_zone(txt)
+    for m in link_re.findall(mzone):
         t = m.strip()
         if t != s and t in nodes:
             adj[s].add(t); adj[t].add(s)

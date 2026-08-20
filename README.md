@@ -54,7 +54,7 @@ prevent.
 | `reference/reference-frames.md` | The yardsticks absence is measured against (the blind-spot checklist) |
 | `examples.md` | One worked map of a real territory: catalog, cards, a ghost, a tension, a correction log |
 | `map/` | Output of a run: `Catalog.md`, `North Star.md`, and `objects/` (one card per object) |
-| `tools/gap-scan.py` | The cheap InfraNodus: betweenness, clusters, load-bearing ghosts, run on `map/` |
+| `tools/gap-scan.py` | The gap scan: ranks nodes by how many paths run through them (a measure called betweenness), groups them into clusters, and flags the ghosts that sit on the most paths, the missing things the structure leans on. A lightweight take on the InfraNodus method. |
 | `tools/build-artifact.py` + `tools/template.html` | Render `map/` into the walkable HTML cartography |
 | `et-cartographer.html` | The published walkable map, rebuilt by `build-artifact.py` |
 | `README.md` | This file |

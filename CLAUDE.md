@@ -28,41 +28,34 @@ Meuse-Rhine (DE / BE / NL).
 ## Current State — Updated 2026-08-20
 
 ### What's working
-- **Complete cartographer folder.** Method files (`identity`, `rules`,
-  `discovery`, `examples`, `README`), `reference/` (`card-types`,
-  `gap-heuristics`, `reference-frames`), `tools/` (`gap-scan.py`,
-  `build-artifact.py`, `template.html`), and `map/` (41 object notes + `Catalog`
-  + `North Star`).
-- **Worked ET Euregio map, second pass done.** 41 objects including the engagement
-  layer (ET-InnoNet is a real hub) and 7 ghosts. Built from public sources only.
-- **Gap engine works and is consistent.** `gap-scan.py` computes betweenness +
-  modularity on the object graph (navigation nodes excluded); numbers match
-  `build-artifact.py`. The financing-vehicle ghost ranks #2 by betweenness
-  (237 vs Interreg 295) — the load-bearing absence.
-- **Published walkable artifact** (private): catalog-left, one-card-center,
-  network toggle. Fully rebuildable from `map/`.
+- **On GitHub:** https://github.com/jacksoncalling/et-cartographer (branch `main`).
+- **Complete cartographer folder** + 41-object ET map + gap engine + published
+  walkable artifact, all rebuildable from `map/`.
+- **Edges = typed movements only.** Both tools use `movements_zone`, so only
+  canonical relationships (not description mentions) count as graph edges. This
+  reshaped the centrality: the busiest nodes are ET-InnoNet (engagement) and the
+  funding-silo tension; the financing-vehicle ghost is the most central *absence*,
+  not the most central object.
+- **Artifact hero reframed and made legible:** the headline number is the count of
+  named absences (7), not a raw betweenness figure.
 - **`reference-frames.md` de-biased.** The yardstick is built per run from the
   user's frameworks + two deeply-researched analogues, not a canned list.
   `discovery.md` carries the reference-frame step and the anti-shallow rule.
 
 ### Known issues / debt
-- **Artifact language is insider** ("ghost", "betweenness 237.3"). Needs a
-  plain-language legend for cold readers.
-- **Template header is hardcoded ET** (title / subtitle / footer). Reuse needs a
-  3-line edit; documented in README ("Reuse on a new territory").
-- **Map carries fingerprints of our conversation.** A fresh source-only run is
-  warranted, especially re-testing the AI-coordination ghost against real analogues.
-- `examples.md` is a pre-second-pass snapshot (fewer objects than live `map/`);
-  fine as a teaching sample.
+- **Card "centrality N.N" chips still show raw betweenness.** Could gloss to plain
+  language later; the hero is already fixed.
+- **Template header is hardcoded ET** (title / subtitle / footer); 3-line edit to
+  reuse, documented in README.
+- **Map carries fingerprints of our conversation.** `blind-run/` is a fresh
+  source-only re-run in progress (gitignored, out of the submission for now).
+- `examples.md` is a pre-second-pass snapshot; fine as a teaching sample.
 
 ### What's next
-1. **Push to GitHub + submit the contest** (repo link + 2–3 sentence blurb +
-   artifact link). Initial commit is done; add a remote and push.
-2. **German AGIT version**: first-person "how I would approach this as a
-   technology manager," plain framing, the map, then where I would dig next and
-   who I would contact.
-3. **Fresh source-only run** to strip conversational bias, plus a plain-language
-   legend layer on the artifact.
+1. **Submit the contest**: repo link + 2–3 sentence blurb + artifact link.
+2. **German AGIT version**: first-person "how I would approach this as a technology
+   manager," plain framing, the map, then where I would dig next and who to contact.
+3. **Finish the `blind-run/` fresh map** and compare it to this one.
 
 ---
 

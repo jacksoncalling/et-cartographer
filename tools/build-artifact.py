@@ -47,6 +47,25 @@ def parse_body(body):
         elif s.lower().startswith("- does not hit:"): miss = clean(s.split(":", 1)[1])
     return title, clean(" ".join(desc)), hits, miss
 
+def movements_zone(body):
+    """Extract the typed-movements zone where [[wikilinks]] count as edges.
+    Skips title + description paragraph; stops at Hits/Does-not-hit/Source."""
+    lines = body.splitlines()
+    past_title = False; past_desc = False; zone = []
+    for line in lines:
+        s = line.strip()
+        if not past_title:
+            if s.startswith("# "): past_title = True
+            continue
+        if not past_desc:
+            if not s: past_desc = True
+            continue
+        sl = s.lower()
+        if sl.startswith("- hits:") or sl.startswith("- does not hit:"): break
+        if sl.startswith("source:"): break
+        if s: zone.append(line)
+    return "\n".join(zone)
+
 # ---- load ----
 files = []
 for root, _, fs in os.walk(MAP):
@@ -62,7 +81,8 @@ for p in files:
     if nid == "North Star": north_star = desc
     if nid in EXCLUDE: continue
     connects = []
-    for m in LINK.findall(body):
+    mzone = movements_zone(body)
+    for m in LINK.findall(mzone):
         t = m.strip()
         if t != nid and t in allnodes and t not in EXCLUDE and t not in connects:
             connects.append(t)

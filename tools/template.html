@@ -129,8 +129,8 @@
 
     <div class="hero">
       <div>
-        <div class="metric" id="heroMetric">0.0</div>
-        <div class="mlabel">betweenness</div>
+        <div class="metric" id="heroMetric">0</div>
+        <div class="mlabel">named absences</div>
       </div>
       <div>
         <div class="htext" id="heroText"></div>
@@ -177,11 +177,11 @@
   const graphEl = document.getElementById('graph');
 
   // ---- hero + north star ----
-  document.getElementById('heroMetric').textContent = DATA.hero.bet.toFixed(1);
-  document.getElementById('heroText').textContent = 'Some of the most central objects on this map do not exist.';
   var ghostCount = DATA.nodes.filter(n=>n.status==='ghost').length;
+  document.getElementById('heroMetric').textContent = ghostCount;
+  document.getElementById('heroText').textContent = ghostCount + ' of the things this map names do not actually exist.';
   document.getElementById('heroNote').innerHTML =
-    'Betweenness centrality ranks <b>'+DATA.topReal.label+'</b> highest among things that exist. But the map now carries <b style="color:var(--alert)">'+ghostCount+' absences</b>, named structures with no wiring. The most central, '+DATA.hero.label.replace(/ ?\(ghost\)/,'')+', outranks every funder, lab and institution on the map.';
+    'The busiest real node on the map is <b>'+DATA.topReal.label+'</b>. The <b style="color:var(--alert)">'+ghostCount+' absences</b> are objects the sources name but have not built. The most central of them, <b>'+DATA.hero.label.replace(/ ?\(ghost\)/,'')+'</b>, does not yet exist.';
   document.getElementById('northStar').innerHTML = '<b>North star.</b> ' + DATA.northStar;
 
   // ---- catalog shelves ----
