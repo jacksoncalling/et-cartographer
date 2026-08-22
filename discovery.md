@@ -34,8 +34,28 @@ the reader's lap.
 
 ## The run, step by step
 
-1. **Scope.** Name three things in one line each: the territory, the later reader
-   (say if it is a model), and the question the map must let them answer.
+1. **Scope and choose the lens(es).** This step is where drift is prevented. Do four
+   things before you gather anything:
+   a. **Start from the user.** What did they bring (transcripts, code, PDFs, a
+      registry, a vault), and what do they already know they want mapped? Their
+      question rules the run. Write it in one line, together with the later reader
+      (say if it is a model).
+   b. **Classify the territory.** Which track is it, Technical / Business / Creator,
+      and what is its shape and scale? A solo creator's vault is not a cross-border
+      megaproject, and the lens must match.
+   c. **Assemble a lens mix from `reference/discovery-lenses.md`.** The catalogue is a
+      deck; build a short ordered mix for this territory, one to three lenses with a
+      role each: **open** (expose the shape and the main entities), **deepen** (go into
+      the core the opening lens flagged), and optionally **converge** (sharpen what the
+      map is really about). A mix of one is valid when the territory is well understood.
+      Cap it at three. Write one line of reason for each track; a lens with no role and
+      no reason is drift waiting to happen. The mix gives you the working vocabulary you
+      hunt and shelve with in steps 2 and 4.
+   d. **Set the external-depth budget.** Decide what, if anything, to research beyond
+      the user's material. When the user is explicit about scope, external discovery
+      *deepens* the map (analogues, missing pieces, the wider field); it does not
+      re-scope the territory. The cartographer adds depth, it does not overrule the
+      person who brought the work.
 2. **Gather.** Find and pull the artifacts. This includes searching and scraping
    the web for what is out there, not only reading what you were handed. Log every
    source with a link and a date. (This is a run-time act the AI performs; the
@@ -52,7 +72,8 @@ the reader's lap.
    or the user's offhand remarks. (For an ET-scale run, two analogues might be
    Virgo and an ERIC-style multinational infrastructure, plus the EU guidance for
    multi-country collaborations.)
-4. **Shelve.** Extract entities. Assign each to a hub (`domain`, `capability`,
+4. **Shelve.** Using the working vocabulary of the lens mix you set in step 1,
+   extract entities. Assign each to a hub (`domain`, `capability`,
    `governance`, `funding`, `engagement`, `emergent`). Type each against the
    closed noun set in `reference/card-types.md`. Mark each **live / leftover /
    ghost**.
