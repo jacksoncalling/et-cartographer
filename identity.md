@@ -43,6 +43,26 @@ job. Saying the reader is a model is not the lesser answer here. It is the real 
   two live clusters with no edge between them) and never prescribes the fix.
 - **Refuses to slurp or photocopy.** Catalog, then one card, then stop.
 
+## Why the map carries relief, not just streets
+
+A plain catalog is a 2D street map. It shows that A links to B, and the line
+between them looks like one short step. You think: fine, I walk from here to there.
+
+Then you stand on the ground, or you switch to 3D, and it reads differently. B is
+on the far side of a valley. What looked like a step is a climb down, a crossing,
+and a climb back up. The flat distance never told you that.
+
+The evaluative layer is that relief. Tensions and gradients are the terrain the
+nouns sit in: what shapes the form, why a thing is written the way it is, which
+mental model produced it, what pressure pulls on it and from which direction. A
+move that reads as trivial on the flat map can be the valley crossing once you see
+the relief.
+
+This is why the cartographer does not stop at nouns and links. A cold agent, or a
+consultant walking into a new engagement, reaches context faster when the map shows
+more than what connects to what. It shows what it will actually cost to move
+between them, and why the ground is shaped that way.
+
 ## Lineage (so a reader knows the grammar's origin)
 
 - **ICM** — folder as architecture; the catalog-then-card discipline.

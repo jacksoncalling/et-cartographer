@@ -1,23 +1,21 @@
 # -*- coding: utf-8 -*-
-"""Build the walkable HTML cartography from the map/ notes.
-Parses notes, computes betweenness + modularity on the OBJECT graph
-(navigation nodes excluded), injects the data into template.html."""
+"""Build the walkable HTML cartography for the OpenEvidence map.
+Reuses the core graph logic and template from the ET build, swapping
+ET-specific strings for OpenEvidence ones."""
 import os, re, json
 from collections import deque, defaultdict
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-MAP = os.path.join(HERE, "..", "map")
-TEMPLATE = os.path.join(HERE, "template.html")
-OUT = os.path.join(HERE, "..", "output", "et-cartographer.html")
+HERE  = os.path.dirname(os.path.abspath(__file__))
+MAP   = os.path.join(HERE, "..", "map-openevidence")
+TEMPLATE = os.path.join(HERE, "template-openevidence.html")
+OUT   = os.path.join(HERE, "..", "output", "openevidence-cartographer.html")
 EXCLUDE = {"Catalog", "North Star"}
 
 name = lambda p: os.path.splitext(os.path.basename(p))[0]
-
 def read(p): return open(p, encoding="utf-8").read()
 
 def split_fm(txt):
-    fm = {}
-    body = txt
+    fm = {}; body = txt
     if txt.startswith("---"):
         end = txt.find("\n---", 3)
         if end != -1:
@@ -29,29 +27,24 @@ def split_fm(txt):
     return fm, body
 
 LINK = re.compile(r"\[\[([^\]|#]+)")
-def clean(s): return s.replace("[[", "").replace("]]", "").strip()
+def clean(s): return s.replace("[[","").replace("]]","").strip()
 
 def parse_body(body):
-    lines = body.splitlines()
-    title = None; i = 0
+    lines = body.splitlines(); title = None; i = 0
     for idx, l in enumerate(lines):
         if l.startswith("# "): title = l[2:].strip(); i = idx+1; break
     while i < len(lines) and not lines[i].strip(): i += 1
     desc = []
-    while i < len(lines) and lines[i].strip():
-        desc.append(lines[i].strip()); i += 1
+    while i < len(lines) and lines[i].strip(): desc.append(lines[i].strip()); i += 1
     hits = miss = None
     for l in lines:
         s = l.strip()
-        if s.lower().startswith("- hits:"): hits = clean(s.split(":", 1)[1])
-        elif s.lower().startswith("- does not hit:"): miss = clean(s.split(":", 1)[1])
+        if s.lower().startswith("- hits:"): hits = clean(s.split(":",1)[1])
+        elif s.lower().startswith("- does not hit:"): miss = clean(s.split(":",1)[1])
     return title, clean(" ".join(desc)), hits, miss
 
 def movements_zone(body):
-    """Extract the typed-movements zone where [[wikilinks]] count as edges.
-    Skips title + description paragraph; stops at Hits/Does-not-hit/Source."""
-    lines = body.splitlines()
-    past_title = False; past_desc = False; zone = []
+    lines = body.splitlines(); past_title = False; past_desc = False; zone = []
     for line in lines:
         s = line.strip()
         if not past_title:
@@ -72,35 +65,33 @@ for root, _, fs in os.walk(MAP):
     for f in fs:
         if f.endswith(".md"): files.append(os.path.join(root, f))
 allnodes = set(name(p) for p in files)
-records = {}
-north_star = ""
+records = {}; north_star = ""
 for p in files:
-    nid = name(p)
-    fm, body = split_fm(read(p))
+    nid = name(p); fm, body = split_fm(read(p))
     title, desc, hits, miss = parse_body(body)
     if nid == "North Star": north_star = desc
     if nid in EXCLUDE: continue
-    connects = []
-    mzone = movements_zone(body)
+    connects = []; mzone = movements_zone(body)
     for m in LINK.findall(mzone):
         t = m.strip()
         if t != nid and t in allnodes and t not in EXCLUDE and t not in connects:
             connects.append(t)
-    records[nid] = dict(id=nid, label=nid, type=fm.get("type", "Object"),
-                        status=fm.get("status", "live").lower(), kind=fm.get("kind", ""),
-                        hub=fm.get("hub", ""),
+    subtype = fm.get("subtype","").lower()
+    records[nid] = dict(id=nid, label=nid, type=fm.get("type","Object"),
+                        status=fm.get("status","live").lower(),
+                        kind=fm.get("kind",""), hub=fm.get("hub",""),
+                        subtype=subtype,
                         desc=desc, hits=hits, doesNotHit=miss, connects=connects)
 
-# ---- graph (object nodes only) ----
+# ---- graph ----
 adj = defaultdict(set)
 for nid, r in records.items():
     for t in r["connects"]:
-        if t in records:
-            adj[nid].add(t); adj[t].add(nid)
+        if t in records: adj[nid].add(t); adj[t].add(nid)
 for nid in records: adj[nid]
 
 def brandes(adj):
-    CB = {v: 0.0 for v in adj}
+    CB = {v:0.0 for v in adj}
     for s in adj:
         S=[]; P={w:[] for w in adj}; sig={w:0 for w in adj}; sig[s]=1
         d={w:-1 for w in adj}; d[s]=0; Q=deque([s])
@@ -124,8 +115,7 @@ def communities(adj):
     def lij(a,b): return sum(1 for x in members[a] for y in adj[x] if cof[y]==b)
     improved=True
     while improved:
-        improved=False; best=None; bestdq=1e-9
-        pairs=set()
+        improved=False; best=None; bestdq=1e-9; pairs=set()
         for x in adj:
             for y in adj[x]:
                 a,b=cof[x],cof[y]
@@ -146,21 +136,30 @@ for n, c in cof.items(): comm[c].append(n)
 ranked = sorted(comm.values(), key=lambda v: -len(v))
 big = set(ranked[0]) if ranked else set()
 
-def shelf(typ, status, kind, hub):
-    t = typ.lower()
+def shelf(typ, status, subtype, kind, hub):
+    t = typ.lower(); sub = subtype.lower()
     if status == "ghost": return "Ghosts"
-    if hub.lower() == "engagement": return "Engagement"
-    if t in ("tension", "gradient"): return "Evaluative"
+    if t in ("tension", "gradient"): return "Tensions & gradients"
     if t == "decision": return "Decisions"
     if t == "jurisdiction": return "Jurisdictions"
-    if t == "shared resource": return "Shared resources"
+    if "revenue stream" in sub: return "Revenue streams"
+    if "value proposition" in sub: return "Value propositions"
+    if "key activity" in sub or "product" in sub: return "Key activities"
+    if "channel" in sub: return "Channels"
+    if "cost structure" in sub: return "Cost structure"
+    if "key resource" in sub: return "Key resources"
+    if t == "shared resource": return "Key resources"
     if t == "capability": return "Capabilities"
-    if t == "instrument":
-        return "Funders" if "funder" in kind.lower() else "Instruments"
-    if t == "actor": return "Institutions & bodies"
+    if t == "instrument": return "Instruments"
+    if t == "actor":
+        s2 = sub or kind.lower()
+        if "customer" in s2 or "user" in s2: return "Customer segments"
+        if "capital" in s2 or "investor" in s2 or "funder" in s2: return "Investors"
+        if "partner" in s2 or "infrastructure" in s2: return "Key partners"
+        if "competitor" in s2: return "Competitive context"
+        return "Actors"
     return "Emergent"
 
-# hero = most central ghost
 ghosts = [(bet[n], n) for n, r in records.items() if r["status"] == "ghost"]
 hero_bet, hero_id = max(ghosts) if ghosts else max((bet[n], n) for n in records)
 
@@ -169,7 +168,7 @@ for nid, r in records.items():
     r = dict(r)
     r["bet"] = round(bet.get(nid, 0.0), 1)
     r["cluster"] = 0 if nid in big else 1
-    r["shelf"] = shelf(r["type"], r["status"], r["kind"], r.get("hub", ""))
+    r["shelf"] = shelf(r["type"], r["status"], r.get("subtype",""), r["kind"], r.get("hub",""))
     r["alert"] = (nid == hero_id)
     nodes.append(r)
 
@@ -177,22 +176,23 @@ edges = []
 seen = set()
 for a in adj:
     for b in adj[a]:
-        k = tuple(sorted((a, b)))
-        if k not in seen: seen.add(k); edges.append([k[0], k[1]])
+        k = tuple(sorted((a,b)))
+        if k not in seen: seen.add(k); edges.append([k[0],k[1]])
 
 real = [(bet[n], n) for n, r in records.items() if r["status"] != "ghost"]
 top_bet, top_id = max(real) if real else (0.0, "")
 DATA = dict(nodes=nodes, edges=edges,
-            hero=dict(id=hero_id, label=hero_id, bet=round(hero_bet, 1)),
-            topReal=dict(id=top_id, label=top_id, bet=round(top_bet, 1)),
+            hero=dict(id=hero_id, label=hero_id, bet=round(hero_bet,1)),
+            topReal=dict(id=top_id, label=top_id, bet=round(top_bet,1)),
             northStar=north_star)
 
 tpl = read(TEMPLATE)
-html = tpl.replace("/*__DATA__*/", "const DATA = " + json.dumps(DATA, ensure_ascii=False) + ";")
+html = tpl
+
+html = html.replace("/*__DATA__*/", "const DATA = " + json.dumps(DATA, ensure_ascii=False) + ";")
 open(OUT, "w", encoding="utf-8").write(html)
 print("wrote", os.path.abspath(OUT))
-print("nodes", len(nodes), "edges", len(edges), "clusters", len(ranked))
-print("hero:", hero_id, hero_bet)
-print("top betweenness:")
-for n, v in sorted(((r["bet"], r["id"]) for r in nodes), reverse=True)[:8]:
-    print("  ", n, v)
+print("nodes", len(nodes), "edges", len(edges))
+print("hero ghost:", hero_id, round(hero_bet,1))
+print("top real:  ", top_id, round(top_bet,1))
+print("shelves used:", sorted(set(n["shelf"] for n in nodes)))
