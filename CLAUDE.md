@@ -25,22 +25,22 @@ Meuse-Rhine (DE / BE / NL).
 
 ---
 
-## Current State — Updated 2026-08-20
+## Current State — Updated 2026-08-23
 
 ### What's working
 - **On GitHub:** https://github.com/jacksoncalling/et-cartographer (branch `main`).
-- **Complete cartographer folder** + 41-object ET map + gap engine + published
-  walkable artifact, all rebuildable from `map/`.
-- **Edges = typed movements only.** Both tools use `movements_zone`, so only
-  canonical relationships (not description mentions) count as graph edges. This
-  reshaped the centrality: the busiest nodes are ET-InnoNet (engagement) and the
-  funding-silo tension; the financing-vehicle ghost is the most central *absence*,
-  not the most central object.
+- **Three walked territories, three published artifacts:**
+  - ET Euregio (41 objects, ecosystem lens): https://claude.ai/code/artifact/a1e73ced-ee6b-4fb0-afd5-4905e4061bce
+  - OpenEvidence (56 objects, Business Model Canvas lens): https://claude.ai/code/artifact/02572122-e3bd-4af6-8605-4f14087a111e
+  - Stone Masters (21 objects, consulting-client map from two real conversations): https://claude.ai/code/artifact/5b1e7fa6-84a5-4989-9944-fea7ad2ac16f
+- **Edges = typed movements only.** All tools use `movements_zone`, so only
+  canonical relationships (not description mentions) count as graph edges.
 - **Artifact hero reframed and made legible:** the headline number is the count of
-  named absences (7), not a raw betweenness figure.
+  named absences, not a raw betweenness figure.
 - **`reference-frames.md` de-biased.** The yardstick is built per run from the
   user's frameworks + two deeply-researched analogues, not a canned list.
   `discovery.md` carries the reference-frame step and the anti-shallow rule.
+- **Output reorganized:** all generated HTML lives in `output/`, never the root.
 
 ### Known issues / debt
 - **Card "centrality N.N" chips still show raw betweenness.** Could gloss to plain
@@ -119,10 +119,12 @@ The graph: nodes = object notes; edges = resolved `[[wikilinks]]`. Navigation no
 | Reference | `reference/card-types.md`, `reference/discovery-lenses.md`, `reference/gap-heuristics.md`, `reference/reference-frames.md` |
 | ET Euregio map source | `map/Catalog.md`, `map/North Star.md`, `map/objects/*.md` |
 | OpenEvidence map source | `map-openevidence/Catalog.md`, `map-openevidence/North Star.md`, `map-openevidence/objects/*.md` |
+| Stone Masters map source | `map-stonemasters/Catalog.md`, `map-stonemasters/North Star.md`, `map-stonemasters/objects/*.md` |
 | Gap report tool | `tools/gap-scan.py` (accepts map path as argument) |
 | ET build | `tools/build-artifact.py` + `tools/template.html` |
 | OpenEvidence build | `tools/build-openevidence-artifact.py` + `tools/template-openevidence.html` |
 | OpenEvidence map generator | `tools/build-openevidence-map.py` |
+| Stone Masters build | `tools/build-stonemasters-artifact.py` + `tools/template-stonemasters.html` |
 | Generated HTML output | `output/` (do not hand-edit files here) |
 
 ---
@@ -144,10 +146,15 @@ python tools/build-artifact.py
 python tools/build-openevidence-artifact.py
 # then republish output/openevidence-cartographer.html via the Artifact tool (same URL)
 
+# rebuild Stone Masters artifact
+python tools/build-stonemasters-artifact.py
+# then republish output/stonemasters-cartographer.html via the Artifact tool (same URL)
+
 # preview locally (JS runs only when served, not as a file:// snapshot)
 python -m http.server 8137
 # ET:            http://localhost:8137/output/et-cartographer.html
 # OpenEvidence:  http://localhost:8137/output/openevidence-cartographer.html
+# Stone Masters:     http://localhost:8137/output/stonemasters-cartographer.html
 ```
 
 ---
