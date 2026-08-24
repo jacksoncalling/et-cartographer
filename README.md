@@ -48,12 +48,15 @@ prevent.
 |---|---|
 | `identity.md` | Who the cartographer is, what it walks, who the later reader is |
 | `rules.md` | How it maps: the anti-fabrication law, marking, the two gaps, the research trigger, the refusals |
-| `discovery.md` | The run protocol: what to point it at, and the steps from sources to map |
+| `discovery.md` | Pass 1 of the run: point it at the body of work, build the inventory of nouns and the reference-frame yardstick, write `Inventory.md` |
+| `cartography.md` | Pass 2 of the run: wire the nouns, confirm ghosts, hunt gaps (two methods), write the catalog, cards, and evaluative layer |
 | `reference/card-types.md` | The closed set of 6 nouns, the movements, the walk order, the naming collisions |
+| `reference/discovery-lenses.md` | The deck of reading models; how to classify a territory and assemble a lens mix |
 | `reference/gap-heuristics.md` | How to find gaps: the by-hand scan and the computed tool |
 | `reference/reference-frames.md` | The yardsticks absence is measured against (the blind-spot checklist) |
+| `reference/glossary.md` | The lookup surface: every term, one or two lines, pointing to the file that owns it |
 | `examples.md` | One worked map of a real territory: catalog, cards, a ghost, a tension, a correction log |
-| `map/` | Output of a run: `Catalog.md`, `North Star.md`, and `objects/` (one card per object) |
+| `map/` | Output of a run: `Inventory.md` (Pass 1), then `Catalog.md`, `North Star.md`, and `objects/` (one card per object) |
 | `tools/gap-scan.py` | The gap scan: ranks nodes by how many paths run through them (a measure called betweenness), groups them into clusters, and flags the ghosts that sit on the most paths, the missing things the structure leans on. A lightweight take on the InfraNodus method. |
 | `tools/build-artifact.py` + `tools/template.html` | Render `map/` into the walkable HTML cartography |
 | `et-cartographer.html` | The published walkable map, rebuilt by `build-artifact.py` |

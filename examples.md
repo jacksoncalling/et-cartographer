@@ -4,7 +4,7 @@
 > cited noun cards, one ghost, one tension, one change traced, and one correction.
 > Sources are real: the verified ET-Förder-Navigator corpus (Joshua Baker, checked
 > 2026-08-13) plus einsteintelescope-emr.eu (governance interview with Andrew
-> Harrison; the /business page). Corpus "gelb" → object marked **candidate**, not
+> Harrison; the /business page). Corpus "gelb" → object marked **pending** (in preparation), not
 > live. Absent from any source → **ghost**.
 >
 > A cold reader enters here, opens ONE card, and stops. They do not read the rest.

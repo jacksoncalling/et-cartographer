@@ -76,13 +76,15 @@ Meuse-Rhine (DE / BE / NL).
 The folder IS the agent's operating instructions. Each file does one job.
 
 - `identity.md` — who the cartographer is, the territory it walks, the reader (may be a model).
-- `rules.md` — the anti-fabrication law, live/leftover/ghost marking, the two gaps, the research trigger, the refusals.
-- `discovery.md` — the run protocol (8 steps: scope + choose the lens mix, gather, build the reference frame, shelve, wire, hunt gaps, write, iterate).
+- `rules.md` — the anti-fabrication law, live/pending/leftover/ghost marking, the two gaps, the research trigger, the refusals.
+- `discovery.md` — Pass 1 of the run (inventory + yardstick): scope + lens mix, gather, build the reference frame, shelve. Writes `Inventory.md` into the run's map folder. Inventory before cards.
+- `cartography.md` — Pass 2 of the run (the map): wire, confirm ghosts via the degree tripwire, hunt gaps (internal structural + external reference-frame), write catalog / cards / evaluative layer, iterate. Reads `Inventory.md`; one agent, one session, not a pipeline.
 - `reference/card-types.md` — the closed set of 6 nouns, the canonical movements, the walk order, the naming collisions.
 - `reference/discovery-lenses.md` — the catalogue of reading models (the deck). How to classify a territory (Technical / Business / Creator) and assemble a lens mix (open / deepen / converge) to hunt and shelve with. A lens generates questions, so the deck may be canned; the reference frame generates verdicts, so it must be earned.
 - `reference/gap-heuristics.md` — the by-hand gap scan and the computed tool, and how to read them.
 - `reference/reference-frames.md` — how to build the absence yardstick per run (never canned).
-- `map/` — the OUTPUT of a run: `Catalog.md` (front door), `North Star.md` (meta), `objects/` (the cards).
+- `reference/glossary.md` — the lookup surface: every term in one or two lines, pointing to the file that owns its full definition. Names the two planes (objects vs the evaluative field) and the Terroir lineage of tensions and gradients.
+- `map/` — the OUTPUT of a run: `Inventory.md` (Pass 1 checkpoint), `Catalog.md` (front door), `North Star.md` (meta), `objects/` (the cards).
 - `tools/` — `gap-scan.py` (report), `build-artifact.py` + `template.html` (the HTML).
 
 ---
@@ -115,8 +117,8 @@ The graph: nodes = object notes; edges = resolved `[[wikilinks]]`. Navigation no
 
 | What | Where |
 |---|---|
-| Method (the cartographer) | `identity.md`, `rules.md`, `discovery.md`, `README.md`, `examples.md` |
-| Reference | `reference/card-types.md`, `reference/discovery-lenses.md`, `reference/gap-heuristics.md`, `reference/reference-frames.md` |
+| Method (the cartographer) | `identity.md`, `rules.md`, `discovery.md`, `cartography.md`, `README.md`, `examples.md` |
+| Reference | `reference/card-types.md`, `reference/discovery-lenses.md`, `reference/gap-heuristics.md`, `reference/reference-frames.md`, `reference/glossary.md` |
 | ET Euregio map source | `map/Catalog.md`, `map/North Star.md`, `map/objects/*.md` |
 | OpenEvidence map source | `map-openevidence/Catalog.md`, `map-openevidence/North Star.md`, `map-openevidence/objects/*.md` |
 | Stone Masters map source | `map-stonemasters/Catalog.md`, `map-stonemasters/North Star.md`, `map-stonemasters/objects/*.md` |

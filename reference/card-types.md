@@ -45,7 +45,7 @@ taxation, grants, contracts, MOUs and treaties live — one type, many kinds.
   (this attribute carries your Contract-vs-Commitment distinction)
 - **money-routing**: does € actually flow across the border through this, or is it
   named but dry?
-- status: live | leftover | ghost (see below)
+- status: live | pending | leftover | ghost (see below)
 
 ### 5. Decision
 A governance choice already made.
@@ -77,7 +77,7 @@ project, "whose law / whose tax / whose permit applies" decides everything.
 
 ---
 
-## Live / Leftover / Ghost — the marking rule
+## Live / Pending / Leftover / Ghost — the marking rule
 
 Every card carries one. This is the tripwire discipline: a cold reader, human or
 model, must never implement a wish as if it were wired.
@@ -85,6 +85,10 @@ model, must never implement a wish as if it were wired.
 - **Live** — wired now, citeable to a current source. A signed instrument, a named
   holder, money actually routing, an authority actually exercising it.
   *e.g. a grant agreement currently disbursing; a zoning study commissioned and underway.*
+- **Pending** — forthcoming and sourced as such, not yet wired, on a credible track to
+  live. *e.g. a bidbook in preparation; a site decision on a set timeline but not yet
+  made.* Not a ghost (a ghost has no sourced path) and not a leftover (a leftover was
+  once live).
 - **Leftover** — honest residue. Was live, still referenced, no longer load-bearing.
   *e.g. an MOU from the feasibility phase whose signatory agency was reorganized;
   a capability mapped from the reference detector that does not transfer to this site.*

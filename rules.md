@@ -13,8 +13,8 @@ model, will act on this map. One invented object and the map is worse than nothi
 
 1. **Every card cites its source.** A link, a file, a dated document. No source, no
    card. A claim with no anchor does not get written down as a fact.
-2. **Verified vs open is always marked.** live/candidate/ghost is visible on every
-   object (below). Candidate never renders as fact.
+2. **Verified vs open is always marked.** live / pending / leftover / ghost is visible
+   on every object (below). A pending or ghost object never renders as live fact.
 3. **The model voices; the structure detects.** The cartographer names what the
    sources contain and where they are silent. It never fills a silence with an
    invented object. (An agent once fabricated a whole interview because a name in
@@ -41,12 +41,16 @@ builds the wrong world.
 
 ---
 
-## MARKING — live / leftover / ghost
+## MARKING — live / pending / leftover / ghost
 
 The single most important act. It is **mechanical**, not a judgment call:
 
 - **Live** — named in a current source **and** wired: it has a holder, an
   instrument, an authority, or money actually routing. (green)
+- **Pending** — named in a source as forthcoming or in preparation, not yet wired,
+  but on a credible, sourced path to becoming live (a bidbook in preparation; a
+  decision on a set track but not yet made). Not a ghost, which has no sourced path;
+  not a leftover, which was once live. (pending)
 - **Leftover** — was live, still referenced, no longer load-bearing. Honest
   residue. Mark it so no one treats it as current. (amber)
 - **Ghost** — **named but unwired.** Referenced in the body of work, but no source
