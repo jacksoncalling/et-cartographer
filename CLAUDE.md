@@ -123,10 +123,10 @@ The graph: nodes = object notes; edges = resolved `[[wikilinks]]`. Navigation no
 | OpenEvidence map source | `map-openevidence/Catalog.md`, `map-openevidence/North Star.md`, `map-openevidence/objects/*.md` |
 | Stone Masters map source | `map-stonemasters/Catalog.md`, `map-stonemasters/North Star.md`, `map-stonemasters/objects/*.md` |
 | Gap report tool | `tools/gap-scan.py` (accepts map path as argument) |
-| ET build | `tools/build-artifact.py` + `tools/template.html` |
-| OpenEvidence build | `tools/build-openevidence-artifact.py` + `tools/template-openevidence.html` |
-| OpenEvidence map generator | `tools/build-openevidence-map.py` |
-| Stone Masters build | `tools/build-stonemasters-artifact.py` + `tools/template-stonemasters.html` |
+| Artifact builder (all territories) | `tools/build-artifact.py <map-folder>` |
+| Per-map build config | `<map-folder>/build.json` (template, output name, shelf rules) |
+| Template skins | `tools/template.html` (ET), `tools/template-stonemasters.html`, `tools/template-openevidence.html` |
+| OpenEvidence map generator (one-off scaffold) | `tools/build-openevidence-map.py` |
 | Generated HTML output | `output/` (do not hand-edit files here) |
 
 ---
@@ -140,17 +140,11 @@ python tools/gap-scan.py
 # gap report -- OpenEvidence
 python tools/gap-scan.py map-openevidence
 
-# rebuild ET artifact
-python tools/build-artifact.py
-# then republish output/et-cartographer.html via the Artifact tool (same URL)
-
-# rebuild OpenEvidence artifact
-python tools/build-openevidence-artifact.py
-# then republish output/openevidence-cartographer.html via the Artifact tool (same URL)
-
-# rebuild Stone Masters artifact
-python tools/build-stonemasters-artifact.py
-# then republish output/stonemasters-cartographer.html via the Artifact tool (same URL)
+# rebuild an artifact -- one builder, pass the map folder (reads <map>/build.json)
+python tools/build-artifact.py map                # -> output/et-cartographer.html
+python tools/build-artifact.py map-openevidence   # -> output/openevidence-cartographer.html
+python tools/build-artifact.py map-stonemasters       # -> output/stonemasters-cartographer.html
+# then republish the output/*.html via the Artifact tool (same URL)
 
 # preview locally (JS runs only when served, not as a file:// snapshot)
 python -m http.server 8137
@@ -178,12 +172,16 @@ python -m http.server 8137
   environment breaks on apostrophes and `<<'EOF'` delimiters in the command body.
   Authoring markdown/HTML via the Write tool, or emitting files from a Python
   script, avoids the quoting trap entirely.
-- **The artifact is data-driven.** Never hand-edit `et-cartographer.html`. Change
-  `map/` (or `template.html`), then rerun `build-artifact.py`.
+- **The artifact is data-driven.** Never hand-edit the `output/*.html`. Change the
+  `map/` notes (or the template skin, or the shelf rules in `<map>/build.json`), then
+  rerun `python tools/build-artifact.py <map-folder>`.
 - **Hero copy is dynamic.** The artifact reads the top real hub and the top ghost
   from the data, so re-running discovery keeps the headline true.
-- **Reuse needs a different map, not a different cartographer.** Swap `map/`, edit
-  three ET-specific lines in `template.html`, rerun the tools.
+- **Reuse needs a different map, not a different cartographer, and not a different
+  builder.** One `build-artifact.py` serves every territory. A new territory needs a
+  new map folder, a `build.json` in it (template skin, output name, shelf rules), and
+  a template skin (clone an existing one and swap the header lines). Then rerun
+  `gap-scan.py` and `build-artifact.py` against the new folder.
 
 ---
 

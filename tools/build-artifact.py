@@ -1,14 +1,31 @@
 # -*- coding: utf-8 -*-
-"""Build the walkable HTML cartography from the map/ notes.
-Parses notes, computes betweenness + modularity on the OBJECT graph
-(navigation nodes excluded), injects the data into template.html."""
-import os, re, json
+"""Build the walkable HTML cartography for one map folder.
+
+Usage:
+    python tools/build-artifact.py <map-folder>     (default: map)
+
+Reads <map-folder>/build.json for the template, the output filename, and the
+shelf rules. Parses the notes, computes betweenness + modularity on the OBJECT
+graph (navigation nodes excluded), then injects the data into the template.
+
+One builder, one graph rule, N territories. The only per-territory differences
+(which template skin, what to name the output, how to shelve the nouns) live in
+each map's build.json, not in this code.
+"""
+import os, re, json, sys
 from collections import deque, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-MAP = os.path.join(HERE, "..", "map")
-TEMPLATE = os.path.join(HERE, "template.html")
-OUT = os.path.join(HERE, "..", "output", "et-cartographer.html")
+ROOT = os.path.join(HERE, "..")
+MAPARG = sys.argv[1] if len(sys.argv) > 1 else "map"
+MAP = os.path.join(ROOT, MAPARG)
+CONFIG = os.path.join(MAP, "build.json")
+if not os.path.isfile(CONFIG):
+    raise SystemExit("no build.json in %s (needs: template, out, shelves)" % MAP)
+cfg = json.load(open(CONFIG, encoding="utf-8"))
+TEMPLATE = os.path.join(HERE, cfg["template"])
+OUT = os.path.join(ROOT, "output", cfg["out"])
+SHELVES = cfg["shelves"]
 EXCLUDE = {"Catalog", "North Star"}
 
 name = lambda p: os.path.splitext(os.path.basename(p))[0]
@@ -88,7 +105,7 @@ for p in files:
             connects.append(t)
     records[nid] = dict(id=nid, label=nid, type=fm.get("type", "Object"),
                         status=fm.get("status", "live").lower(), kind=fm.get("kind", ""),
-                        hub=fm.get("hub", ""),
+                        hub=fm.get("hub", ""), subtype=fm.get("subtype", "").lower(),
                         desc=desc, hits=hits, doesNotHit=miss, connects=connects)
 
 # ---- graph (object nodes only) ----
@@ -146,30 +163,52 @@ for n, c in cof.items(): comm[c].append(n)
 ranked = sorted(comm.values(), key=lambda v: -len(v))
 big = set(ranked[0]) if ranked else set()
 
-def shelf(typ, status, kind, hub):
-    t = typ.lower()
-    if status == "ghost": return "Ghosts"
-    if hub.lower() == "engagement": return "Engagement"
-    if t in ("tension", "gradient"): return "Evaluative"
-    if t == "decision": return "Decisions"
-    if t == "jurisdiction": return "Jurisdictions"
-    if t == "shared resource": return "Shared resources"
-    if t == "capability": return "Capabilities"
-    if t == "instrument":
-        return "Funders" if "funder" in kind.lower() else "Instruments"
-    if t == "actor": return "Institutions & bodies"
+def shelf(rec):
+    """Apply the map's ordered shelf rules; first match wins, else Emergent.
+    A rule is {"when": [[field, op, value], ...], "shelf": name}; ops are
+    eq (equals), in (in a list), contains (substring). Conditions are ANDed."""
+    fields = {
+        "status":  rec["status"],
+        "type":    rec["type"].lower(),
+        "subtype": rec.get("subtype", ""),
+        "kind":    rec["kind"].lower(),
+        "hub":     rec["hub"].lower(),
+    }
+    fields["sub_or_kind"] = fields["subtype"] or fields["kind"]
+    for rule in SHELVES:
+        ok = True
+        for f, op, val in rule.get("when", []):
+            fv = fields.get(f, "")
+            if op == "eq": ok = (fv == val)
+            elif op == "in": ok = (fv in val)
+            elif op == "contains": ok = (val in fv)
+            else: ok = False
+            if not ok: break
+        if ok: return rule["shelf"]
     return "Emergent"
 
 # hero = most central ghost
 ghosts = [(bet[n], n) for n, r in records.items() if r["status"] == "ghost"]
 hero_bet, hero_id = max(ghosts) if ghosts else max((bet[n], n) for n in records)
 
+# plain-language reach tier: betweenness as a fraction of the map's busiest node.
+# "how much of the map moves if this one changes", so a cold reader never meets a
+# raw betweenness figure. The number is kept for the card's hover tooltip.
+maxbet = max(bet.values()) if bet else 0.0
+def tier_of(b):
+    frac = (b / maxbet) if maxbet else 0.0
+    if frac >= 0.5: return "Load-bearing"
+    if frac >= 0.2: return "Bridge"
+    if frac > 0:    return "Connector"
+    return "Leaf"
+
 nodes = []
 for nid, r in records.items():
     r = dict(r)
     r["bet"] = round(bet.get(nid, 0.0), 1)
+    r["tier"] = tier_of(bet.get(nid, 0.0))
     r["cluster"] = 0 if nid in big else 1
-    r["shelf"] = shelf(r["type"], r["status"], r["kind"], r.get("hub", ""))
+    r["shelf"] = shelf(r)
     r["alert"] = (nid == hero_id)
     nodes.append(r)
 
@@ -192,7 +231,5 @@ html = tpl.replace("/*__DATA__*/", "const DATA = " + json.dumps(DATA, ensure_asc
 open(OUT, "w", encoding="utf-8").write(html)
 print("wrote", os.path.abspath(OUT))
 print("nodes", len(nodes), "edges", len(edges), "clusters", len(ranked))
-print("hero:", hero_id, hero_bet)
-print("top betweenness:")
-for n, v in sorted(((r["bet"], r["id"]) for r in nodes), reverse=True)[:8]:
-    print("  ", n, v)
+print("hero ghost:", hero_id, round(hero_bet, 1), "| top real:", top_id, round(top_bet, 1))
+print("shelves used:", sorted(set(n["shelf"] for n in nodes)))

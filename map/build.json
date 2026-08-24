@@ -1,0 +1,17 @@
+{
+  "template": "template.html",
+  "out": "et-cartographer.html",
+  "shelves": [
+    {"when": [["status", "eq", "ghost"]], "shelf": "Ghosts"},
+    {"when": [["hub", "eq", "engagement"]], "shelf": "Engagement"},
+    {"when": [["type", "in", ["tension", "gradient"]]], "shelf": "Evaluative"},
+    {"when": [["type", "eq", "decision"]], "shelf": "Decisions"},
+    {"when": [["type", "eq", "jurisdiction"]], "shelf": "Jurisdictions"},
+    {"when": [["type", "eq", "shared resource"]], "shelf": "Shared resources"},
+    {"when": [["type", "eq", "capability"]], "shelf": "Capabilities"},
+    {"when": [["type", "eq", "instrument"], ["kind", "contains", "funder"]], "shelf": "Funders"},
+    {"when": [["type", "eq", "instrument"]], "shelf": "Instruments"},
+    {"when": [["type", "eq", "actor"]], "shelf": "Institutions & bodies"},
+    {"when": [], "shelf": "Emergent"}
+  ]
+}

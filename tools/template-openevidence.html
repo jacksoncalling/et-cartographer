@@ -485,7 +485,7 @@ footer b { color: var(--muted); }
     ghostCount + ' of the things this map names do not yet exist.';
   document.getElementById('heroNote').innerHTML =
     'The most central live node is <b style="color:var(--accent)">' + DATA.topReal.label +
-    '</b> (centrality ' + DATA.topReal.bet.toFixed(0) + '). ' +
+    '</b>, the busiest live node on the map. ' +
     'The most structurally load-bearing absence is <b style="color:var(--ghost-col)">' +
     DATA.hero.label.replace(/ ?\(ghost\)/, '') +
     '</b> — a real user community switched off in one decision.';
@@ -550,7 +550,7 @@ footer b { color: var(--muted); }
     const statusCls = 'status-' + n.status;
     let chips = '<span class="chip ' + statusCls + '"><span class="dot ' + n.status + '"></span>'
       + n.status.charAt(0).toUpperCase() + n.status.slice(1) + '</span>';
-    chips += '<span class="chip cent">centrality ' + n.bet.toFixed(1) + '</span>';
+    chips += '<span class="chip cent" title="betweenness ' + n.bet.toFixed(1) + '">' + n.tier + '</span>';
     if (n.hub) chips += '<span class="chip">' + n.hub + '</span>';
     h += '<div class="chips">' + chips + '</div>';
 

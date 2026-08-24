@@ -236,7 +236,7 @@
     let h = '';
     h += '<div class="kicker">'+n.type+(n.kind?' &middot; '+n.kind:'')+'</div>';
     h += '<h2>'+n.label+'</h2>';
-    h += '<div class="chips">'+statusChip(n)+'<span class="chip cent">centrality '+n.bet.toFixed(1)+'</span>'+(n.hub?'<span class="chip">'+n.hub+'</span>':'')+'</div>';
+    h += '<div class="chips">'+statusChip(n)+'<span class="chip cent" title="betweenness '+n.bet.toFixed(1)+'">'+n.tier+'</span>'+(n.hub?'<span class="chip">'+n.hub+'</span>':'')+'</div>';
     if(n.desc) h += '<p class="desc">'+n.desc+'</p>';
     if(n.alert){
       h += '<div class="ghostcallout"><b>Load-bearing absence.</b> This is the most structurally central ghost on the map. Everything operational depends on it, but it has no external form: no document, no protocol, no system. It lives only in two people\'s memories.</div>';
