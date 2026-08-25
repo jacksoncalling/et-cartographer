@@ -9,7 +9,7 @@ hub: governance
 Operations partner at Stone Masters. Makes judgment calls alongside [[Bram]]:
 dispatch, sick cover, job changes, when to bring in subcontractors. The only
 other person who can make these decisions. Was present at the 2026-07-21
-vor-Ort meeting. Role confirmed as "Operations, PlanCraft" in Josh's notes.
+vor-Ort meeting. Role confirmed as "Operations, PlanCraft" in the discovery notes.
 
 Holds [[Dispatch and Scheduling]] (shared with Bram) . Holds [[Quoting and Intake]] (partial)
 

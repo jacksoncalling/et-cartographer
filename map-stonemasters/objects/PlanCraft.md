@@ -8,7 +8,7 @@ hub: domain
 
 The firm's central software tool. Handles Termine (scheduling), Zeiterfassung
 (time tracking), and Doku (documentation). Described as the operational backbone.
-Niels's role is partly tied to it ("Operations, PlanCraft" in Josh's contact
+Niels's role is partly tied to it ("Operations, PlanCraft" in the consultant's contact
 notes). It is infrastructure; the judgment that drives dispatch does not live
 in it. PlanCraft holds the mechanics, not the decisions.
 

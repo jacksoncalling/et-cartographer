@@ -9,7 +9,7 @@ role: front-door
 > voice note) and the consulting-engagement folder around them.
 >
 > Territory: one established KMU. Shape: owner-operator scaling past the
-> two-heads bottleneck. Later reader: Josh returning cold, or a model joining.
+> two-heads bottleneck. Later reader: the consultant returning cold, or a model joining.
 
 ---
 
@@ -83,9 +83,9 @@ and no wiring. The map does not prescribe what to do about them.
 
 | Source | Date | Type |
 |--------|------|------|
-| Vor-Ort meeting (Josh + Bram + Niels) | 2026-07-21 | in-person conversation |
+| Vor-Ort meeting (the consultant + Bram + Niels) | 2026-07-21 | in-person conversation |
 | WhatsApp voice note (Bram) | 2026-08-03 | 6m25s audio, transcribed |
-| Josh's lead notes and outcome-note | 2026-07 to 2026-08 | analyst reflections |
+| the consultant's lead notes and outcome-note | 2026-07 to 2026-08 | analyst reflections |
 
 ## Correction log
 

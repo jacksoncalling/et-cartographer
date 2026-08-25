@@ -16,7 +16,7 @@ would make this possible. It is a desire with no mechanism.
 **Ghost because:** named by the owner as a goal, but no source gives it a
 holder (who manages the transition?), an instrument (what delegation structure?),
 or a timeline. The outcome-note escalates this as "would-change-the-offer" and
-flags a strategic fork (consulting engagement vs. Sensing System pilot). Josh's
+flags a strategic fork (consulting engagement vs. Sensing System pilot). the consultant's
 mirror letter explicitly does not propose a solution.
 
 UNVERIFIED - research: What does "owner stepping back from a 16-person trade
