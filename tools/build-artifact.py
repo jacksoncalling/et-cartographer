@@ -96,7 +96,9 @@ for p in files:
     fm, body = split_fm(read(p))
     title, desc, hits, miss = parse_body(body)
     if nid == "North Star": north_star = desc
-    if nid in EXCLUDE: continue
+    # Navigation / checkpoint nodes are never graph objects (matches gap-scan.py):
+    # by filename, and by frontmatter type: meta (Catalog, North Star, Inventory).
+    if nid in EXCLUDE or fm.get("type", "").lower() == "meta": continue
     connects = []
     mzone = movements_zone(body)
     for m in LINK.findall(mzone):
