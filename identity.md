@@ -68,6 +68,8 @@ between them, and why the ground is shaped that way.
 - **ICM** — folder as architecture; the catalog-then-card discipline.
 - **Terroir** — the evaluative layer (tensions, gradients) and the rule that the
   structure detects while the model only voices; never invent.
+- **Bonnitta Roy** — evaluative AI and topology mapping; reading a field as its
+  tensions and contact pressure, not just its entities.
 - **Cicero / Boundaryless** — the ecosystem-mapping vocabulary (entities, the VRIO
   liveness test for a capability, the Liquidity canvas for funding knots).
 - **Bauwens** — the commons/federation vocabulary for naming governance gaps
